@@ -11,6 +11,12 @@
 .picture {
   width: 400px;
   height: 250px;
+  transition: transform 0.5s;
+}
+
+.picture:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .picture-img {
