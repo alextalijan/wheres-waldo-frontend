@@ -1,0 +1,25 @@
+.h1 {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.instructions {
+  font-size: 2rem;
+  text-align: center;
+  margin: 3rem auto;
+  opacity: 0.7;
+}
+
+.record-times {
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  margin-bottom: 2rem;
+}
+
+.picture {
+  width: 95%;
+  margin: 0 auto;
+  display: block;
+}
