@@ -1,14 +1,15 @@
 import PictureSelection from '../PictureSelection/PictureSelection';
 import { useState, useEffect } from 'react';
+import styles from './Home.module.css';
 
 function Home() {
-  const { pictures, setPictures } = useState([]);
-  const { loadingPictures, setLoadingPictures } = useState(true);
-  const { picturesError, setPicturesError } = useState(null);
+  const [pictures, setPictures] = useState([]);
+  const [loadingPictures, setLoadingPictures] = useState(true);
+  const [picturesError, setPicturesError] = useState(null);
 
   // Fetch pictures on initial load
   useEffect(() => {
-    fetch(import.meta.env.REACT_APP_API + 'pictures')
+    fetch(import.meta.env.VITE_API + 'pictures')
       .then((response) => response.json())
       .then((response) => {
         if (!response.success) {
@@ -32,7 +33,7 @@ function Home() {
       ) : picturesError ? (
         <p>picturesError</p>
       ) : (
-        <div>
+        <div className={styles['pictures-grid']}>
           {pictures.map((picture) => {
             return <PictureSelection key={picture.id} name={picture.name} />;
           })}
