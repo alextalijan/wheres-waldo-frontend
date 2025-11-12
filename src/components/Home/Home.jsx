@@ -26,8 +26,10 @@ function Home() {
 
   return (
     <>
-      <h1>Where's Waldo</h1>
-      <p>Choose the picture you want to play.</p>
+      <h1 className={styles.h1}>Where's Waldo</h1>
+      <p className={styles.instructions}>
+        Choose the picture you want to play.
+      </p>
       {loadingPictures ? (
         <p>Loading...</p>
       ) : picturesError ? (
