@@ -16,7 +16,7 @@ function PictureSelection({ name }) {
   }, [isHovered, name]);
 
   return (
-    <Link className={styles.card} to={`/${name}`}>
+    <Link className={styles.card} to={`/play/${name}`}>
       <div
         className={styles.picture}
         onMouseEnter={() => setIsHovered(true)}
