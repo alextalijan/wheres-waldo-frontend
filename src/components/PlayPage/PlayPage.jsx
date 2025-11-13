@@ -8,6 +8,7 @@ function PlayPage() {
   const [isGameActive, setIsGameActive] = useState(true);
   const [characters, setCharacters] = useState([]);
   const [records, setRecords] = useState([]);
+  const [milliseconds, setMilliseconds] = useState(0);
 
   // Fetch the characters to be found on this page
   useEffect(() => {
@@ -45,6 +46,53 @@ function PlayPage() {
       });
   }, [pictureName]);
 
+  // Check if the game is over after every character change
+  useEffect(() => {
+    let isGameOver;
+    if (characters.length > 0) {
+      isGameOver = true;
+    } else {
+      isGameOver = false;
+    }
+    for (const character of characters) {
+      if (!character.isFound) {
+        isGameOver = false;
+        break;
+      }
+    }
+
+    // If the game is over
+    if (isGameOver) {
+      // Stop the timer
+      setIsGameActive(false);
+
+      // Prompt the user for inputing their name
+      const username = prompt('What is your username?');
+
+      // Send a new record to database
+      const record = {
+        username,
+        milliseconds,
+      };
+      fetch(import.meta.env.VITE_API + `pictures/${pictureName}/records`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(record),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          if (!response.success) {
+            return alert(response.message);
+          }
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  }, [characters]);
+
   return (
     <>
       <h1 className={styles.h1}>{pictureName.toUpperCase()}</h1>
@@ -53,7 +101,11 @@ function PlayPage() {
         you found.
       </p>
       <div className={styles['record-times']}>
-        <Stopwatch isActive={isGameActive} />
+        <Stopwatch
+          isActive={isGameActive}
+          milliseconds={milliseconds}
+          setMilliseconds={setMilliseconds}
+        />
         <span>Best Time:</span>
       </div>
       <img
