@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function Stopwatch({ isActive }) {
-  const [milliseconds, setMilliseconds] = useState(0);
-
+function Stopwatch({ isActive, milliseconds, setMilliseconds }) {
   useEffect(() => {
     let interval;
     if (isActive) {
@@ -14,7 +12,7 @@ function Stopwatch({ isActive }) {
     }
 
     return () => clearInterval(interval);
-  }, [isActive]);
+  }, [isActive, setMilliseconds]);
 
   return (
     <span>
