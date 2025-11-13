@@ -23,3 +23,36 @@
   margin: 0 auto;
   display: block;
 }
+
+.h2 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.characters-instructions {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.characters-list {
+  list-style-type: none;
+}
+
+.characters-list > li {
+  font-size: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  padding: 5px;
+}
+
+.character-pic {
+  width: 40px;
+}
+
+.no-records-msg {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 3rem auto;
+}
