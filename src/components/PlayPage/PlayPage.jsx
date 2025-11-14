@@ -100,14 +100,11 @@ function PlayPage() {
         Mark characters by clicking on the picture and choosing the character
         you found.
       </p>
-      <div className={styles['record-times']}>
-        <Stopwatch
-          isActive={isGameActive}
-          milliseconds={milliseconds}
-          setMilliseconds={setMilliseconds}
-        />
-        <span>Best Time:</span>
-      </div>
+      <Stopwatch
+        isActive={isGameActive}
+        milliseconds={milliseconds}
+        setMilliseconds={setMilliseconds}
+      />
       <img
         className={styles.picture}
         src={`/src/assets/pictures/${pictureName}.jpg`}

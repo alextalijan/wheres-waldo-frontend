@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import styles from './Stopwatch.module.css';
 
 function Stopwatch({ isActive, milliseconds, setMilliseconds }) {
   useEffect(() => {
@@ -15,7 +16,7 @@ function Stopwatch({ isActive, milliseconds, setMilliseconds }) {
   }, [isActive, setMilliseconds]);
 
   return (
-    <span>
+    <span className={styles.stopwatch}>
       Time:{' '}
       {Math.floor(milliseconds / 60000) +
         'm ' +
