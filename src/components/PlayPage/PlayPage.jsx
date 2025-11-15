@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import styles from './PlayPage.module.css';
 import Stopwatch from '../Stopwatch/Stopwatch';
+import TargetModal from '../TargetModal/TargetModal';
 import { useEffect, useState } from 'react';
 
 function PlayPage() {
@@ -9,6 +10,8 @@ function PlayPage() {
   const [characters, setCharacters] = useState([]);
   const [records, setRecords] = useState([]);
   const [milliseconds, setMilliseconds] = useState(0);
+  const [isTargetChosen, setIsTargetChosen] = useState(false);
+  const [targetCoordinates, setTargetCoordinates] = useState(null);
 
   // Fetch the characters to be found on this page
   useEffect(() => {
@@ -93,6 +96,18 @@ function PlayPage() {
     }
   }, [characters]);
 
+  const handleTargetClick = function thatPlacesTargetBoxOnPicture(event) {
+    // If the target box is already shown
+    if (isTargetChosen) {
+      // Remove the target box on second click
+      setIsTargetChosen(false);
+    } else {
+      // Place the target box where user clicked
+      setIsTargetChosen(true);
+      setTargetCoordinates({ x: event.pageX, y: event.pageY });
+    }
+  };
+
   return (
     <>
       <h1 className={styles.h1}>{pictureName.toUpperCase()}</h1>
@@ -109,6 +124,7 @@ function PlayPage() {
         className={styles.picture}
         src={`/src/assets/pictures/${pictureName}.jpg`}
         alt="picture"
+        onClick={handleTargetClick}
       />
       <section>
         <h2 className={styles.h2}>Find these characters:</h2>
@@ -149,6 +165,12 @@ function PlayPage() {
           </ol>
         )}
       </section>
+      {isTargetChosen && (
+        <TargetModal
+          characters={characters.filter((character) => !character.isFound)}
+          coordinates={targetCoordinates}
+        />
+      )}
     </>
   );
 }

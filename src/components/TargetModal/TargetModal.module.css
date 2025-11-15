@@ -1,0 +1,36 @@
+.target {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.target-box {
+  width: 20px;
+  height: 20px;
+  background-color: blue;
+  opacity: 0.7;
+  border-radius: 8px;
+}
+
+.target-modal {
+  background-color: white;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.target-heading {
+  margin-bottom: 0.5rem;
+}
+
+.choose-target-btn {
+  padding: 0.3rem 0.6rem;
+  border-radius: 1rem;
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+}
