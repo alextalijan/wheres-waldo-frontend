@@ -10,10 +10,15 @@
   opacity: 0.7;
 }
 
-.picture {
+.picture-container {
+  position: relative;
   width: 95%;
   margin: 0 auto;
   display: block;
+}
+
+.picture {
+  width: 100%;
 }
 
 .h2 {

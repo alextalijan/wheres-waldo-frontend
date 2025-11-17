@@ -9,15 +9,17 @@ function TargetModal({ characters, coordinates }) {
   };
 
   const coordinateStyles = {
-    left: coordinates.x - 10,
-    top: coordinates.y - 10,
+    top: `calc(${coordinates.y * 100}% - 10px)`,
   };
 
   // If modal is too far right
-  if (coordinates.x > 300) {
+  if (coordinates.x > 0.25) {
     // Set the modal to be on the left side
     coordinateStyles.flexDirection = 'row-reverse';
-    coordinateStyles.left -= 305;
+    coordinateStyles.right = `calc(100% - ${coordinates.x * 100}% - 10px)`;
+  } else {
+    // Set it normally
+    coordinateStyles.left = `calc(${coordinates.x * 100}% - 10px)`;
   }
 
   return (

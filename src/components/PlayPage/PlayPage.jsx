@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import styles from './PlayPage.module.css';
 import Stopwatch from '../Stopwatch/Stopwatch';
 import TargetModal from '../TargetModal/TargetModal';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 function PlayPage() {
   const { pictureName } = useParams();
@@ -12,6 +12,7 @@ function PlayPage() {
   const [milliseconds, setMilliseconds] = useState(0);
   const [isTargetChosen, setIsTargetChosen] = useState(false);
   const [targetCoordinates, setTargetCoordinates] = useState(null);
+  const imgRef = useRef(null);
 
   // Fetch the characters to be found on this page
   useEffect(() => {
@@ -104,7 +105,14 @@ function PlayPage() {
     } else {
       // Place the target box where user clicked
       setIsTargetChosen(true);
-      setTargetCoordinates({ x: event.pageX, y: event.pageY });
+
+      // Store the coordinates as relative percentages in the image
+      const rect = imgRef.current.getBoundingClientRect();
+      setTargetCoordinates({
+        x: (event.clientX - rect.left) / rect.width,
+        y: (event.clientY - rect.top) / rect.height,
+      });
+      console.log(targetCoordinates);
     }
   };
 
@@ -120,12 +128,21 @@ function PlayPage() {
         milliseconds={milliseconds}
         setMilliseconds={setMilliseconds}
       />
-      <img
-        className={styles.picture}
-        src={`/src/assets/pictures/${pictureName}.jpg`}
-        alt="picture"
-        onClick={handleTargetClick}
-      />
+      <div className={styles['picture-container']}>
+        <img
+          className={styles.picture}
+          src={`/src/assets/pictures/${pictureName}.jpg`}
+          alt="picture"
+          onClick={handleTargetClick}
+          ref={imgRef}
+        />
+        {isTargetChosen && (
+          <TargetModal
+            characters={characters.filter((character) => !character.isFound)}
+            coordinates={targetCoordinates}
+          />
+        )}
+      </div>
       <section>
         <h2 className={styles.h2}>Find these characters:</h2>
         <p className={styles['characters-instructions']}>
@@ -165,12 +182,6 @@ function PlayPage() {
           </ol>
         )}
       </section>
-      {isTargetChosen && (
-        <TargetModal
-          characters={characters.filter((character) => !character.isFound)}
-          coordinates={targetCoordinates}
-        />
-      )}
     </>
   );
 }
