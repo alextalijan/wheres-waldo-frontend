@@ -18,6 +18,7 @@ function PlayPage() {
   const [symbol, setSymbol] = useState(null);
   const [refreshRecords, setRefreshRecords] = useState(false);
   const imgRef = useRef(null);
+  const recordsRef = useRef(null);
 
   // Fetch the characters to be found on this page
   useEffect(() => {
@@ -96,7 +97,11 @@ function PlayPage() {
             return alert('Error posting the record.');
           }
 
+          // Fetch the records again and scroll to it
           setRefreshRecords((prev) => !prev);
+          recordsRef.current.scrollIntoView({
+            behavior: 'smooth',
+          });
         })
         .catch((error) => {
           alert(error.message);
@@ -221,7 +226,7 @@ function PlayPage() {
         {records.length === 0 ? (
           <p className={styles['no-records-msg']}>No records yet.</p>
         ) : (
-          <ol className={styles['records-list']}>
+          <ol className={styles['records-list']} ref={recordsRef}>
             {records.map((record) => {
               return (
                 <li className={styles.record}>
