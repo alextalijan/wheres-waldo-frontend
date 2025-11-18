@@ -221,12 +221,16 @@ function PlayPage() {
         {records.length === 0 ? (
           <p className={styles['no-records-msg']}>No records yet.</p>
         ) : (
-          <ol>
+          <ol className={styles['records-list']}>
             {records.map((record) => {
               return (
-                <li>
-                  {record.name} - {Math.floor(record.milliseconds / 60000)}m{' '}
-                  {(record.milliseconds % 60000) / 1000}s
+                <li className={styles.record}>
+                  <span>{record.name}</span>
+                  <span className={styles['record-divider']}> - </span>
+                  <span>
+                    {Math.floor(record.milliseconds / 60000)}m{' '}
+                    {(record.milliseconds % 60000) / 1000}s
+                  </span>
                 </li>
               );
             })}

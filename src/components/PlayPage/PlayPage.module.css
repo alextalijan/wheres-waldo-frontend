@@ -56,3 +56,36 @@
   text-align: center;
   margin: 3rem auto;
 }
+
+.records-list {
+  display: grid;
+  grid-template-columns: max-content 30px max-content;
+  gap: 0.5rem;
+  width: max-content;
+  margin: 2rem auto;
+
+  counter-reset: rec; /* <— Initialize counter */
+}
+
+.record {
+  display: grid;
+  grid-column: 1 / -1;
+  font-size: 2rem;
+  grid-template-columns: subgrid;
+
+  counter-increment: rec; /* <— Increase for each record */
+  position: relative; /* needed for ::before positioning */
+}
+
+/* Add number */
+.record::before {
+  content: counter(rec) '. ';
+  position: absolute;
+  left: -3ch; /* adjust as needed */
+  text-align: right;
+  width: 2ch;
+}
+
+.record-divider {
+  justify-self: center;
+}
