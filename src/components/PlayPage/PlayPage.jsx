@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import styles from './PlayPage.module.css';
 import Stopwatch from '../Stopwatch/Stopwatch';
 import TargetModal from '../TargetModal/TargetModal';
+import Marker from '../Marker/Marker';
+import Symbol from '../Symbol/Symbol';
 import { useEffect, useState, useRef } from 'react';
 
 function PlayPage() {
@@ -12,6 +14,8 @@ function PlayPage() {
   const [milliseconds, setMilliseconds] = useState(0);
   const [isTargetChosen, setIsTargetChosen] = useState(false);
   const [targetCoordinates, setTargetCoordinates] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [symbol, setSymbol] = useState(null);
   const imgRef = useRef(null);
 
   // Fetch the characters to be found on this page
@@ -112,9 +116,49 @@ function PlayPage() {
         x: (event.clientX - rect.left) / rect.width,
         y: (event.clientY - rect.top) / rect.height,
       });
-      console.log(targetCoordinates);
     }
   };
+
+  function handleCharacterGuess(choice) {
+    // If the character they have found does not exist
+    if (!characters.map((character) => character.name).includes(choice)) {
+      // Alert them they are target an unexisting character
+      alert(`Character named ${choice} does not exist.`);
+      return;
+    }
+
+    // Find the character they claim to have found
+    for (const character of characters) {
+      if (character.name === choice) {
+        // If the character is at the place they pointed at
+        if (
+          targetCoordinates.x > character.xCoordinate - 0.01 &&
+          targetCoordinates.x < character.xCoordinate + 0.01 &&
+          targetCoordinates.y > character.yCoordinate - 0.01 &&
+          targetCoordinates.y < character.yCoordinate + 0.01
+        ) {
+          // Mark the character as found
+          setCharacters([
+            ...characters.filter((character) => character.name !== choice),
+            { ...character, isFound: true },
+          ]);
+
+          // Circle the character on the picture
+          setMarkers([...markers, { ...targetCoordinates }]);
+
+          // Announce the guess was right
+          setSymbol('✅');
+        } else {
+          // Announce the guess was wrong
+          setSymbol('❌');
+        }
+
+        // Remove the target modal
+        setIsTargetChosen(false);
+        break;
+      }
+    }
+  }
 
   return (
     <>
@@ -140,8 +184,12 @@ function PlayPage() {
           <TargetModal
             characters={characters.filter((character) => !character.isFound)}
             coordinates={targetCoordinates}
+            handleGuess={handleCharacterGuess}
           />
         )}
+        {markers.map((marker) => {
+          return <Marker coordinates={{ ...marker }} />;
+        })}
       </div>
       <section>
         <h2 className={styles.h2}>Find these characters:</h2>
@@ -182,6 +230,7 @@ function PlayPage() {
           </ol>
         )}
       </section>
+      {symbol && <Symbol symbol={symbol} disappear={() => setSymbol(null)} />}
     </>
   );
 }

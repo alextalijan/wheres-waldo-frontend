@@ -1,7 +1,7 @@
 import styles from './TargetModal.module.css';
 import { useState } from 'react';
 
-function TargetModal({ characters, coordinates }) {
+function TargetModal({ characters, coordinates, handleGuess }) {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionChange = (event) => {
@@ -44,7 +44,11 @@ function TargetModal({ characters, coordinates }) {
             );
           })}
         </div>
-        <button type="button" className={styles['choose-target-btn']}>
+        <button
+          type="button"
+          className={styles['choose-target-btn']}
+          onClick={() => handleGuess(selectedOption)}
+        >
           Choose
         </button>
       </div>

@@ -1,0 +1,25 @@
+@keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.symbol {
+  position: fixed;
+  opacity: 0;
+  left: 50%;
+  top: 50%;
+  font-size: 200px;
+  transform: translate(-50%, -50%);
+  animation-name: showUp;
+  animation-duration: 2s;
+}
