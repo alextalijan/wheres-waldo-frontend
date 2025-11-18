@@ -221,12 +221,19 @@ function PlayPage() {
           })}
         </ul>
       </section>
-      <section>
+      <section
+        className={
+          isGameActive
+            ? styles['records-section']
+            : `${styles['records-section']} ${styles['flash-animation']}`
+        }
+        ref={recordsRef}
+      >
         <h2 className={styles.h2}>Record times:</h2>
         {records.length === 0 ? (
           <p className={styles['no-records-msg']}>No records yet.</p>
         ) : (
-          <ol className={styles['records-list']} ref={recordsRef}>
+          <ol className={styles['records-list']}>
             {records.map((record) => {
               return (
                 <li className={styles.record}>

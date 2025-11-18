@@ -1,3 +1,20 @@
+@keyframes flash {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: rgb(247, 237, 54);
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+.flash-animation {
+  animation-name: flash;
+  animation-duration: 2s;
+}
+
 .h1 {
   font-size: 5rem;
   text-align: center;
@@ -49,6 +66,10 @@
 
 .character-pic {
   width: 40px;
+}
+
+.records-section {
+  padding: 2rem;
 }
 
 .no-records-msg {
