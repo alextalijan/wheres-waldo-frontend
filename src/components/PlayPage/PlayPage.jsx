@@ -16,6 +16,7 @@ function PlayPage() {
   const [targetCoordinates, setTargetCoordinates] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [symbol, setSymbol] = useState(null);
+  const [refreshRecords, setRefreshRecords] = useState(false);
   const imgRef = useRef(null);
 
   // Fetch the characters to be found on this page
@@ -52,7 +53,7 @@ function PlayPage() {
 
         setRecords(response.records);
       });
-  }, [pictureName, isGameActive]);
+  }, [pictureName, refreshRecords]);
 
   // Check if the game is over after every character change
   useEffect(() => {
@@ -94,6 +95,8 @@ function PlayPage() {
           if (!response.success) {
             return alert('Error posting the record.');
           }
+
+          setRefreshRecords((prev) => !prev);
         })
         .catch((error) => {
           alert(error.message);
