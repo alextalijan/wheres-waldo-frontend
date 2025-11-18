@@ -106,7 +106,7 @@ function PlayPage() {
     if (isTargetChosen) {
       // Remove the target box on second click
       setIsTargetChosen(false);
-    } else {
+    } else if (isGameActive) {
       // Place the target box where user clicked
       setIsTargetChosen(true);
 
