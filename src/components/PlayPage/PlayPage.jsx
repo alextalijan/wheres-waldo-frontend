@@ -4,6 +4,7 @@ import Stopwatch from '../Stopwatch/Stopwatch';
 import TargetModal from '../TargetModal/TargetModal';
 import Marker from '../Marker/Marker';
 import Symbol from '../Symbol/Symbol';
+import UsernameInput from '../UsernameInput/UsernameInput';
 import { useEffect, useState, useRef } from 'react';
 
 function PlayPage() {
@@ -17,6 +18,7 @@ function PlayPage() {
   const [markers, setMarkers] = useState([]);
   const [symbol, setSymbol] = useState(null);
   const [refreshRecords, setRefreshRecords] = useState(false);
+  const [isUsernameModalOpen, setIsUsernameModalOpen] = useState(false);
   const imgRef = useRef(null);
   const recordsRef = useRef(null);
 
@@ -76,36 +78,8 @@ function PlayPage() {
       // Stop the timer
       setIsGameActive(false);
 
-      // Prompt the user for inputing their name
-      const username = prompt('What is your username?');
-
-      // Send a new record to database
-      const record = {
-        username,
-        milliseconds,
-      };
-      fetch(import.meta.env.VITE_API + `pictures/${pictureName}/records`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(record),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          if (!response.success) {
-            return alert('Error posting the record.');
-          }
-
-          // Fetch the records again and scroll to it
-          setRefreshRecords((prev) => !prev);
-          recordsRef.current.scrollIntoView({
-            behavior: 'smooth',
-          });
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+      // Make the modal for inputing username pop up
+      setIsUsernameModalOpen(true);
     }
   }, [characters, pictureName]);
 
@@ -223,9 +197,9 @@ function PlayPage() {
       </section>
       <section
         className={
-          isGameActive
-            ? styles['records-section']
-            : `${styles['records-section']} ${styles['flash-animation']}`
+          !isGameActive && !isUsernameModalOpen
+            ? `${styles['records-section']} ${styles['flash-animation']}`
+            : styles['records-section']
         }
         ref={recordsRef}
       >
@@ -250,6 +224,15 @@ function PlayPage() {
         )}
       </section>
       {symbol && <Symbol symbol={symbol} disappear={() => setSymbol(null)} />}
+      {isUsernameModalOpen && (
+        <UsernameInput
+          pictureName={pictureName}
+          milliseconds={milliseconds}
+          refreshRecords={() => setRefreshRecords((prev) => !prev)}
+          recordsRef={recordsRef}
+          close={() => setIsUsernameModalOpen(false)}
+        />
+      )}
     </>
   );
 }
