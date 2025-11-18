@@ -24,7 +24,7 @@ function PlayPage() {
       .then((response) => response.json())
       .then((response) => {
         if (!response.success) {
-          return alert(response.message);
+          return alert('Fetching characters error.');
         }
 
         setCharacters(
@@ -46,13 +46,13 @@ function PlayPage() {
     fetch(import.meta.env.VITE_API + `pictures/${pictureName}/records`)
       .then((response) => response.json())
       .then((response) => {
-        if (!response.sucess) {
-          return alert(response.message);
+        if (!response.success) {
+          return alert('Fetching records error.');
         }
 
         setRecords(response.records);
       });
-  }, [pictureName]);
+  }, [pictureName, isGameActive]);
 
   // Check if the game is over after every character change
   useEffect(() => {
@@ -92,14 +92,14 @@ function PlayPage() {
         .then((response) => response.json())
         .then((response) => {
           if (!response.success) {
-            return alert(response.message);
+            return alert('Error posting the record.');
           }
         })
         .catch((error) => {
           alert(error.message);
         });
     }
-  }, [characters]);
+  }, [characters, pictureName]);
 
   const handleTargetClick = function thatPlacesTargetBoxOnPicture(event) {
     // If the target box is already shown
