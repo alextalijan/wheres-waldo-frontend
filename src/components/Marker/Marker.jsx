@@ -6,7 +6,7 @@ function Marker({ coordinates }) {
     top: `calc(${coordinates.y * 100}% - 3%)`,
   };
 
-  return <img src="/src/assets/marker.png" style={style} />;
+  return <img src="/images/marker.png" style={style} />;
 }
 
 export default Marker;

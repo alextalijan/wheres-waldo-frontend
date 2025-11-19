@@ -9,9 +9,9 @@ function PictureSelection({ name }) {
   useEffect(() => {
     // If the picture is hovered on, set it to color
     if (isHovered) {
-      setImgSrc(`/src/assets/pictures/${name}.jpg`);
+      setImgSrc(`/images/pictures/${name}.jpg`);
     } else {
-      setImgSrc(`/src/assets/pictures/${name}_gray.jpg`);
+      setImgSrc(`/images/pictures/${name}_gray.jpg`);
     }
   }, [isHovered, name]);
 

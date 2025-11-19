@@ -157,7 +157,7 @@ function PlayPage() {
       <div className={styles['picture-container']}>
         <img
           className={styles.picture}
-          src={`/src/assets/pictures/${pictureName}.jpg`}
+          src={`/images/pictures/${pictureName}.jpg`}
           alt="picture"
           onClick={handleTargetClick}
           ref={imgRef}
@@ -186,7 +186,7 @@ function PlayPage() {
                 {character.name.charAt(0).toUpperCase() +
                   character.name.slice(1)}
                 <img
-                  src={`/src/assets/characters/${character.name}.png`}
+                  src={`/images/characters/${character.name}.png`}
                   alt=""
                   className={styles['character-pic']}
                 />
